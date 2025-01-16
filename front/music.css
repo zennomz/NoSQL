@@ -1,0 +1,108 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #fff;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #1DB954;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 30px;
+}
+
+.search-container input[type="text"] {
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 50px 0 0 50px;
+    outline: none;
+    background: #3e3e3e;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.search-container button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0 50px 50px 0;
+    background-color: #1DB954;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+.search-container button:hover {
+    background-color: #1ed760;
+}
+
+.music-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+}
+
+.music-item {
+    background: #282828;
+    border-radius: 10px;
+    padding: 15px;
+    width: 180px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.music-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background: #1c1c1c;
+}
+
+.music-item .title {
+    font-size: 1rem;
+    color: #fff;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.music-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+}

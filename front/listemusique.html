@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liste de musique</title>
+  <link rel="stylesheet" href="music.css">
+</head>
+<body>
+  <h1>Liste de musique</h1>
+
+  <div class="search-container">
+    <input type="text" id="searchMusic" placeholder="Rechercher une musique" style="flex: 1;">
+    <button id="search">Rechercher</button>
+  </div>
+  <div class="button">
+    <a href="ajoutmusique.html">Ajouter une musique</a>
+  </div>
+  <br>
+
+  <div id="music-list" class="music-list"></div>
+
+  <script>
+    async function fetchMusicList() {
+      const response = await fetch('http://localhost:3000/music/list');
+      const musics = await response.json();
+
+      const musicList = document.getElementById('music-list');
+      musicList.innerHTML = '';
+
+      musics.forEach(music => {
+        const musicItem = document.createElement('div');
+        musicItem.className = 'music-item';
+
+        const img = document.createElement('img');
+        img.src = `http://localhost:3000/${music.image}`;
+        img.alt = music.name;
+
+        const title = document.createElement('div');
+        title.className = 'title';
+        title.textContent = music.name;
+
+        musicItem.appendChild(img);
+        musicItem.appendChild(title);
+
+        musicList.appendChild(musicItem);
+      });
+    }
+
+    document.getElementById('search').addEventListener('click', () => {
+      const searchQuery = document.getElementById('searchMusic').value.toLowerCase();
+
+      document.querySelectorAll('.music-item').forEach(item => {
+        const title = item.querySelector('.title').textContent.toLowerCase();
+        item.style.display = title.includes(searchQuery) ? '' : 'none';
+      });
+    });
+
+    fetchMusicList();
+  </script>
+</body>
+</html>

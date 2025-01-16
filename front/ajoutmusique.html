@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter une musique</title>
+    <link rel="stylesheet" href="front.css">
+</head>
+<body>
+    <h1>Ajouter une musique</h1>
+
+    <div id="messageAjout"></div>
+    <br>
+
+    <form id="formulaireAjoutMusique" method="post" enctype="multipart/form-data" onsubmit="ajouterMusique(event)">
+        <label for="titre">Titre de la musique</label>
+        <input type="text" name="name" id="titreMusique" required/>
+        
+        <label for="fichierMusique">MP3 de la musique</label>
+        <input name="music" id="fichierMusique" type="file" accept=".mp3, .wav, .mp4" required/>
+        
+        <label for="fichierImage">Image de la musique</label>
+        <input name="image" id="fichierImage" type="file" required/>
+        
+        <button type="submit">Ajouter</button>
+    </form>
+
+    <script>
+        async function ajouterMusique(event) {
+            event.preventDefault();
+            const formulaire = document.getElementById("formulaireAjoutMusique");
+            const formData = new FormData(formulaire);
+            const messageDiv = document.getElementById("messageAjout");
+
+            try {
+                const reponse = await fetch('http://localhost:3000/music', {
+                    method: "POST",
+                    body: formData
+                });
+
+                const resultat = await reponse.json();
+
+                if (reponse.ok) {
+                    messageDiv.textContent = 'Musique ajoutée avec succès !';
+                    setTimeout(() => {
+                        window.location.href = 'listemusique.html';
+                    }, 2000);
+                } else {
+                    messageDiv.textContent = resultat.message || 'Erreur lors de l\'ajout de la musique.';
+                }
+            } catch (erreur) {
+                messageDiv.textContent = 'Erreur serveur.';
+                console.error(erreur);
+            }
+        }
+    </script>
+</body>
+</html>

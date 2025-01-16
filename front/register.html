@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link rel="stylesheet" href="front.css">
+</head>
+<body>
+    <h1>Inscription</h1>
+
+    <div id="messageInscription" color: white;"></div>
+
+    <form id="formulaireInscription" onsubmit="inscriptionUtilisateur(event)">
+        <label for="nom">Nom</label>
+        <input type="text" id="nomUtilisateur" required />
+        <label for="email">Email</label>
+        <input type="email" id="emailInscription" required />
+        <label for="motDePasse">Mot de passe</label>
+        <input type="password" id="motDePasseInscription" required />
+        <button type="submit">S'inscrire</button>
+    </form>
+
+    <p>Vous avez déjà un compte ? <a href="login.html">Connectez-vous ici</a>.</p>
+
+    <script>
+        async function inscriptionUtilisateur(event) {
+            event.preventDefault();
+            const nom = document.getElementById('nomUtilisateur').value;
+            const email = document.getElementById('emailInscription').value;
+            const motDePasse = document.getElementById('motDePasseInscription').value;
+
+            const messageDiv = document.getElementById('messageInscription');
+            messageDiv.textContent = '';
+
+            try {
+                const reponse = await fetch('http://localhost:3000/user/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: nom, email, password: motDePasse })
+                });
+
+                const donnees = await reponse.json();
+
+                if (reponse.ok) {
+                    messageDiv.textContent = 'Inscription réussie.';
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    messageDiv.textContent = donnees.message || 'Une erreur est survenue lors de l\'inscription.';
+                }
+            } catch (error) {
+                messageDiv.textContent = 'Erreur serveur.';
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
